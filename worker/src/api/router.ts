@@ -80,5 +80,5 @@ router.get('/api/config', async (req, env: Env) => {
   });
 });
 
-// 404 handler
-router.all('*', () => error('Not found', 404));
+// 404 handler — only for /api/* routes
+router.all('/api/*', () => error('Not found', 404));

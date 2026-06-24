@@ -13,7 +13,7 @@ import type { Env } from './types';
  */
 export default {
   /**
-   * HTTP fetch handler — serves the REST API.
+   * HTTP fetch handler — serves REST API and static frontend assets.
    */
   async fetch(
     request: Request,
@@ -23,7 +23,15 @@ export default {
     // Periodic cleanup of rate limiter store
     cleanupRateLimitStore();
 
-    return router.fetch(request, env, ctx);
+    const url = new URL(request.url);
+
+    // API routes
+    if (url.pathname.startsWith('/api/')) {
+      return router.fetch(request, env, ctx);
+    }
+
+    // Static assets (frontend) — served by Workers Assets
+    return env.ASSETS.fetch(request);
   },
 
   /**

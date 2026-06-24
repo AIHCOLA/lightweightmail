@@ -1,6 +1,7 @@
 // Environment bindings for Cloudflare Worker
 export interface Env {
   DB: D1Database;
+  ASSETS: Fetcher;
   DOMAIN: string;
   DEFAULT_EMAIL_TTL_MINUTES: string;
   DEFAULT_ADDRESS_TTL_HOURS: string;

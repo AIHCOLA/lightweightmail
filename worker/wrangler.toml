@@ -32,6 +32,11 @@ MAX_ATTACHMENT_SIZE_BYTES = "524288"
 #   CLEANUP_SECRET           - Internal cleanup endpoint key
 #   SEND_KEY                 - MailChannels send key (optional)
 
+# ---- Static Assets (Frontend) ----
+[assets]
+directory = "../frontend/dist"
+not_found_handling = "single-page-application"
+
 # ---- Cron Trigger for Cleanup ----
 [triggers]
 crons = ["*/5 * * * *"]
