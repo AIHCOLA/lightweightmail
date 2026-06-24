@@ -1,4 +1,4 @@
-name = "temp-mail-worker"
+name = "lightweightmail"
 main = "src/index.ts"
 compatibility_date = "2025-06-01"
 compatibility_flags = ["nodejs_compat"]
@@ -9,7 +9,7 @@ compatibility_flags = ["nodejs_compat"]
 [[d1_databases]]
 binding = "DB"
 database_name = "temp-mail-db"
-database_id = "replace-with-your-database-id"
+database_id = "8f5ef24f-0001-4b23-89ec-c6225d3f6af6"
 
 # ---- Environment Variables ----
 [vars]
