@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useRef, useEffect, type ReactNode } from 'react';
 import { X, CheckCircle, AlertCircle, Info } from 'lucide-react';
 import clsx from 'clsx';
 
@@ -24,13 +24,23 @@ export function useToast() {
 
 export function ToastProvider({ children }: { children: ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(() => {
+    return () => {
+      timersRef.current.forEach(clearTimeout);
+      timersRef.current = [];
+    };
+  }, []);
 
   const addToast = useCallback((type: Toast['type'], message: string) => {
     const id = crypto.randomUUID();
     setToasts((prev) => [...prev, { id, type, message }]);
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
+      timersRef.current = timersRef.current.filter(t => t !== timer);
     }, 3500);
+    timersRef.current.push(timer);
   }, []);
 
   const removeToast = useCallback((id: string) => {
