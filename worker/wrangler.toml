@@ -1,0 +1,37 @@
+name = "temp-mail-worker"
+main = "src/index.ts"
+compatibility_date = "2025-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+# ---- D1 Database ----
+# Run: wrangler d1 create temp-mail-db
+# Then paste the database_id here:
+[[d1_databases]]
+binding = "DB"
+database_name = "temp-mail-db"
+database_id = "replace-with-your-database-id"
+
+# ---- Environment Variables ----
+[vars]
+DOMAIN = "aihcolamail.xyz"
+DEFAULT_EMAIL_TTL_MINUTES = "10"
+DEFAULT_ADDRESS_TTL_HOURS = "24"
+MAX_ADDRESSES_PER_SESSION = "5"
+MAX_ATTACHMENT_SIZE_BYTES = "524288"
+
+# Set via `wrangler secret put`:
+#   JWT_SECRET               - HS256 signing key for access+refresh tokens
+#   TWILIO_ACCOUNT_SID       - Twilio account SID (SMS)
+#   TWILIO_AUTH_TOKEN        - Twilio auth token (SMS)
+#   TWILIO_PHONE_NUMBER      - Twilio sender phone number (SMS)
+#   GITHUB_CLIENT_ID         - GitHub OAuth App Client ID
+#   GITHUB_CLIENT_SECRET     - GitHub OAuth App Client Secret
+#   GOOGLE_CLIENT_ID         - Google OAuth 2.0 Client ID
+#   GOOGLE_CLIENT_SECRET     - Google OAuth 2.0 Client Secret
+#   CSRF_SECRET              - CSRF token signing secret
+#   CLEANUP_SECRET           - Internal cleanup endpoint key
+#   SEND_KEY                 - MailChannels send key (optional)
+
+# ---- Cron Trigger for Cleanup ----
+[triggers]
+crons = ["*/5 * * * *"]
